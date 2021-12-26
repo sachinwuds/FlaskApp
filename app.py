@@ -1,30 +1,39 @@
 import datetime as dt
 
+# from pymongo import mongo_client
+from flask_pymongo import PyMongo
 # from flask import Flask
 from flask import Flask,request, abort, make_response ,render_template         
 
 app = Flask(__name__)
+#make sure you are not using your login credentials
+#Create one user and use that user name and password here
+app.config["MONGO_URI"] = "mongodb+srv://sachinkumar:mongoone@firstclustor.uskjt.mongodb.net/firstdb?retryWrites=true&w=majority"
+mongo = PyMongo(app)
+# print(mongo.db)
+
+# collections = mongo.db.list_collection_names()
+# for collection in collections:
+#    print(collection)
+# print(mongo.db.)
+
+#Here is profile is collection in the firstdb database
+db_operations = mongo.db.profile
 
 
 
-@app.route("/",methods = ['GET'])
+@app.route("/",methods = ['GET']) 
 def hello_world():
-    resp = make_response(f"The Cookie has been set")
     now = dt.datetime.now()
-    current_time = now.strftime("%H:%M")
-    
-    print(current_time)
+    current_time = now.strftime("%H:%M")    
     resp = make_response(render_template("index.html"))
     resp.set_cookie('CurrentTime',current_time)
     return resp
 
 @app.route("/getcookie",methods = ['GET'])
 def get_cookies():
-    resp = make_response(f"The Cookie has been set")
-    now = dt.datetime.now()
-    current_time = now.strftime("%H:%M")
-    print(current_time)
-    resp.set_cookie('CurrentTime',current_time)
+    # new_user = {'Name' : 'xyz', 'Age' : 20}
+    # db_operations.insert_one(new_user)
     return render_template("availability.html")  
 
 
@@ -49,3 +58,11 @@ def Isitemavailable():
     else:
         return "<p>{0} is not available</p>".format(itemname)
 
+
+# load_dotenv()
+# MONGODB_URI = os.environ['MONGODB_URI']
+
+# client = MongoClient(MONGODB_URI)
+# db = client.test
+# for db_info in client.list_database_names():
+#    print(db_info)
