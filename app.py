@@ -8,7 +8,7 @@ from flask import Flask,request, abort, make_response ,render_template
 app = Flask(__name__)
 #make sure you are not using your login credentials
 #Create one user and use that user name and password here
-app.config["MONGO_URI"] = "mongodb+srv://sachinkumar:mongoone@firstclustor.uskjt.mongodb.net/firstdb?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://USERNAME:PASSSWORD@firstclustor.uskjt.mongodb.net/firstdb?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 # print(mongo.db)
 
