@@ -1,6 +1,7 @@
 import datetime as dt
 
 # from pymongo import mongo_client
+from decouple import config
 from flask_pymongo import PyMongo
 # from flask import Flask
 from flask import Flask,request, abort, make_response ,render_template         
@@ -8,7 +9,7 @@ from flask import Flask,request, abort, make_response ,render_template
 app = Flask(__name__)
 #make sure you are not using your login credentials
 #Create one user and use that user name and password here
-app.config["MONGO_URI"] = "mongodb+srv://USERNAME:PASSSWORD@firstclustor.uskjt.mongodb.net/firstdb?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://{0}:{1}@firstclustor.uskjt.mongodb.net/{2}?retryWrites=true&w=majority".format(config('user_name'),config('password'),config('database'))
 mongo = PyMongo(app)
 # print(mongo.db)
 
@@ -32,8 +33,8 @@ def hello_world():
 
 @app.route("/getcookie",methods = ['GET'])
 def get_cookies():
-    # new_user = {'Name' : 'xyz', 'Age' : 20}
-    # db_operations.insert_one(new_user)
+    new_user = {'Name' : 'Sachin', 'Age' : 24}
+    db_operations.insert_one(new_user)
     return render_template("availability.html")  
 
 
